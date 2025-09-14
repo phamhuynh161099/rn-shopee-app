@@ -1,15 +1,18 @@
+import React from "react";
 import { Text, View } from "react-native";
 
-export default function Index() {
+const WelcomePage = () => {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+    <View className="flex-1">
+      <View className="flex-[0.6] border">
+        <Text>Title</Text>
+      </View>
+
+      <View className="flex-[0.4] border">
+        <Text>Button</Text>
+      </View>
     </View>
   );
-}
+};
+
+export default WelcomePage;
