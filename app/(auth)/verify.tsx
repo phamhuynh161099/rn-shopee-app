@@ -6,6 +6,9 @@ import { OtpInput } from "react-native-otp-entry";
 const WIDTH_CELL = Dimensions.get("window").width / 6;
 const VerifyPage = () => {
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
+  const onHandleCellTextChange = (text: string) => {
+    console.log(text);
+  };
 
   return (
     <>
