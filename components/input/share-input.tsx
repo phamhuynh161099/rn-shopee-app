@@ -7,14 +7,26 @@ interface IProps {
   keyboardType?: KeyboardTypeOptions;
   secureTextEntry?: boolean;
   value?: any;
-  setValue: (v: any) => void;
+  setValue?: (v: any) => void;
+  onChangeText?: any;
+  onBlur?: any;
+  error?: string;
 }
 
 const ShareInput = (props: IProps) => {
   const [focus, setFocus] = useState<boolean>(false);
   const [isShowPassword, setIsShowPassword] = useState<boolean>(false);
 
-  const { title, keyboardType, secureTextEntry, value, setValue } = props;
+  const {
+    title,
+    keyboardType,
+    secureTextEntry,
+    value,
+    // setValue,
+    onChangeText,
+    onBlur,
+    error,
+  } = props;
 
   return (
     <View className="gap-2">
@@ -24,9 +36,12 @@ const ShareInput = (props: IProps) => {
       <View className="relative">
         <TextInput
           value={value}
-          onChangeText={setValue}
+          onChangeText={onChangeText}
           onFocus={() => setFocus(true)}
-          onBlur={() => setFocus(false)}
+          onBlur={(e) => {
+            setFocus(false);
+            if (onBlur) onBlur(e);
+          }}
           className={`border rounded-lg px-5 pr-11 py-4`}
           style={{
             borderColor: focus ? "orange" : "gray",
@@ -34,6 +49,7 @@ const ShareInput = (props: IProps) => {
           keyboardType={keyboardType}
           secureTextEntry={secureTextEntry && !isShowPassword}
         />
+        {error && <Text className="text-red-500">{error}</Text>}
 
         {secureTextEntry &&
           (isShowPassword ? (

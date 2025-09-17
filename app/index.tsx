@@ -7,7 +7,7 @@ import { ImageBackground, Text, View } from "react-native";
 
 const WelcomePage = () => {
   // if (1) {
-  //   return <Redirect href={"/(auth)/signup"} />;
+  //   return <Redirect href={"/(tabs)"} />;
   // } else {
   // }
   return (

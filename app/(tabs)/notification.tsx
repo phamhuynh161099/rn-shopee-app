@@ -1,14 +1,14 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-const LikePage = () => {
+const Notification = () => {
   return (
     <View>
-      <Text>LikePage</Text>
+      <Text>Notification</Text>
     </View>
   )
 }
 
-export default LikePage
+export default Notification
 
 const styles = StyleSheet.create({})
