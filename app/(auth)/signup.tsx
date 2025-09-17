@@ -8,7 +8,7 @@ import { Link, router } from "expo-router";
 import React, { useEffect } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import ToastManager, { Toast } from "toastify-react-native";
+import { Toast } from "toastify-react-native";
 
 const SignUpPage = () => {
   const URL_BACKEND = process.env.EXPO_PUBLIC_API_URL;
@@ -36,7 +36,10 @@ const SignUpPage = () => {
     try {
       const response = await registerAPI(email, password, fullName);
       if (response.data) {
-        router.navigate("/(auth)/verify");
+        router.navigate({
+          pathname: "/(auth)/verify",
+          params: { email: email },
+        });
       } else {
         Toast.error((response as any).message);
       }
@@ -85,7 +88,7 @@ const SignUpPage = () => {
         <View className="flex flex-row justify-center">
           <Text className="text-black">
             You already have account?{" "}
-            <Link href={"/(auth)/signup"}>
+            <Link href={"/(auth)/login"}>
               <Text className="underline underline-offset-1">Login</Text>
             </Link>
           </Text>
@@ -113,7 +116,7 @@ const SignUpPage = () => {
         </View>
       </View>
 
-      <ToastManager />
+      {/* <ToastManager /> */}
     </SafeAreaView>
   );
 };

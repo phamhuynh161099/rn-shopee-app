@@ -1,13 +1,32 @@
 import Overlay from "@/components/overlay";
+import { verifyCode } from "@/utils/api";
+import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
-import { OtpInput } from "react-native-otp-entry";
+import { Dimensions, Keyboard, StyleSheet, Text, View } from "react-native";
+import { OtpInput, OtpInputRef } from "react-native-otp-entry";
+import ToastManager, { Toast } from "toastify-react-native";
 
-const WIDTH_CELL = Dimensions.get("window").width / 6;
+const WIDTH_CELL = Dimensions.get("window").width / 7;
 const VerifyPage = () => {
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
-  const onHandleCellTextChange = (text: string) => {
-    console.log(text);
+  const otpRef = React.useRef<OtpInputRef>(null);
+  const { email } = useLocalSearchParams();
+
+  const onHandleCellTextChange = async (text: string) => {
+    if (text && text.length === 6) {
+      Keyboard.dismiss();
+      setIsSubmitting(true);
+      const response = await verifyCode(email as string, text);
+      setIsSubmitting(false);
+
+      if (response.data) {
+        Toast.success("Verify success");
+        otpRef.current?.clear();
+        router.navigate("/(auth)/login");
+      } else {
+        Toast.error((response as any).message);
+      }
+    }
   };
 
   return (
@@ -19,9 +38,10 @@ const VerifyPage = () => {
         </Text>
         <View className="mt-2">
           <OtpInput
+            ref={otpRef}
             autoFocus
-            numberOfDigits={5}
-            onTextChange={(text) => console.log(text)}
+            numberOfDigits={6}
+            onTextChange={onHandleCellTextChange}
             theme={{
               containerStyle: {
                 padding: 10,
@@ -35,6 +55,7 @@ const VerifyPage = () => {
       </View>
 
       {isSubmitting && <Overlay />}
+      <ToastManager />
     </>
   );
 };

@@ -27,6 +27,15 @@ export default function RootLayout() {
             name="(auth)/verify"
             options={{ title: "Verify Page", headerShown: false }}
           />
+          <Stack.Screen
+            name="(auth)/login"
+            options={{ title: "Login Page", headerShown: false }}
+          />
+
+          <Stack.Screen
+            name="(tabs)"
+            options={{ title: "Login Page", headerShown: true }}
+          />
         </Stack>
       </SafeAreaView>
     </>

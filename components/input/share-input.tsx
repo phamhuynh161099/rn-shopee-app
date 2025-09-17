@@ -19,7 +19,7 @@ const ShareInput = (props: IProps) => {
   return (
     <View className="gap-2">
       {title && (
-        <Text className="text-2xl font-semibold text-gray-700/80">{title}</Text>
+        <Text className="text-xl font-semibold text-gray-700/50">{title}</Text>
       )}
       <View className="relative">
         <TextInput

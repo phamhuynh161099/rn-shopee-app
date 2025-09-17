@@ -1,15 +1,15 @@
 import ShareButton from "@/components/button/share-button";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
-import { Link, Redirect } from "expo-router";
+import { Link, router } from "expo-router";
 import React from "react";
 import { ImageBackground, Text, View } from "react-native";
 
 const WelcomePage = () => {
-  if (1) {
-    return <Redirect href={"/(auth)/verify"} />;
-  } else {
-  }
+  // if (1) {
+  //   return <Redirect href={"/(auth)/signup"} />;
+  // } else {
+  // }
   return (
     <ImageBackground
       style={{ flex: 1 }}
@@ -30,7 +30,6 @@ const WelcomePage = () => {
           </View>
 
           <View className="h-[40%] px-10 gap-4">
-            
             <View className="flex flex-row justify-between gap-4">
               <ShareButton
                 title="Facebook"
@@ -53,7 +52,11 @@ const WelcomePage = () => {
             <View className="">
               <ShareButton
                 title="Login with email"
-                onPress={() => {}}
+                onPress={() => {
+                  router.navigate({
+                    pathname: "/(auth)/login",
+                  });
+                }}
                 textStyle="text-white font-bold"
                 blockStyle="w-[100%] justify-center bg-[#f4511e]"
               />
