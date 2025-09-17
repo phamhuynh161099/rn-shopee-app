@@ -2,7 +2,7 @@ import ShareButton from "@/components/button/share-button";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Link, router } from "expo-router";
-import React from "react";
+import React, { useEffect } from "react";
 import { ImageBackground, Text, View } from "react-native";
 
 const WelcomePage = () => {
@@ -10,6 +10,10 @@ const WelcomePage = () => {
   //   return <Redirect href={"/(tabs)"} />;
   // } else {
   // }
+
+  useEffect(() => {
+
+  });
   return (
     <ImageBackground
       style={{ flex: 1 }}

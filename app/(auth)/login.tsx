@@ -5,6 +5,7 @@ import { useCurrentApp } from "@/context/app.context";
 import { loginAPI } from "@/utils/api";
 import { LoginShema } from "@/utils/validate.schema";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link, router } from "expo-router";
 import { Formik } from "formik";
 import React, { useState } from "react";
@@ -22,6 +23,7 @@ const LoginPage = () => {
       console.log("start handle");
       const response = await loginAPI(email, password);
       if (response.data) {
+        await AsyncStorage.setItem("access_token", response.data.access_token);
         setAppState(response.data);
         Toast.success("Login success");
         router.navigate({
