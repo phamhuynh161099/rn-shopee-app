@@ -1,84 +1,56 @@
-import ShareButton from "@/components/button/share-button";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { LinearGradient } from "expo-linear-gradient";
-import { Link, router } from "expo-router";
+import { useCurrentApp } from "@/context/app.context";
+import { getAccountAPI } from "@/utils/api";
+import { ErrorBoundaryProps, router } from "expo-router";
 import React, { useEffect } from "react";
-import { ImageBackground, Text, View } from "react-native";
 
-const WelcomePage = () => {
+import * as SplashScreen from "expo-splash-screen";
+import { Text, View } from "react-native";
+// Set the animation options. This is optional.
+// SplashScreen.setOptions({
+//   duration: 1000,
+//   fade: true,
+// });
+SplashScreen.preventAutoHideAsync();
+
+export function ErrorBoundary({ error, retry }: ErrorBoundaryProps) {
+  return (
+    <>
+      <View className="flex-1 bg-sky-300">
+        <Text>{error.message}</Text>
+      </View>
+    </>
+  );
+}
+
+const RootPage = () => {
   // if (1) {
   //   return <Redirect href={"/(tabs)"} />;
   // } else {
   // }
-
+  const { setAppState } = useCurrentApp();
   useEffect(() => {
+    const fetchAccount = async () => {
+      try {
+        const response = await getAccountAPI();
+        if (response.data) {
+          console.log("account::infor", response.data);
+          setAppState({
+            user: response.data,
+          });
+          router.navigate("/(tabs)");
+        } else {
+          router.navigate("/(auth)/welcome");
+        }
+      } catch (error) {
+      } finally {
+        await SplashScreen.hideAsync();
+      }
+    };
 
-  });
-  return (
-    <ImageBackground
-      style={{ flex: 1 }}
-      source={require("@/assets/auth/placeholder.jpg")}
-    >
-      <LinearGradient
-        colors={["rgba(0,0,0,0.8)", "transparent"]}
-        style={{ flex: 1 }}
-        locations={[0.5, 0.8]}
-      >
-        <View className="flex-1">
-          <View className="h-[60%] flex justify-center px-4 gap-4">
-            <Text className="text-5xl font-semibold text-white">Welcom to</Text>
-            <Text className="text-5xl font-bold text-orange-500">
-              @Sakata - Food
-            </Text>
-            <Text className="text-3xl text-white">Demo food app</Text>
-          </View>
+    fetchAccount();
+  }, []);
 
-          <View className="h-[40%] px-10 gap-4">
-            <View className="flex flex-row justify-between gap-4">
-              <ShareButton
-                title="Facebook"
-                onPress={() => {}}
-                textStyle="text-white font-bold"
-                blockStyle="flex-1 bg-[#f4511e]"
-                icon={
-                  <Ionicons name="logo-facebook" size={32} color={"white"} />
-                }
-              />
-              <ShareButton
-                title="Google"
-                onPress={() => {}}
-                textStyle="text-white font-bold"
-                blockStyle="flex-1 justify-center bg-[#f4511e]"
-                icon={<Ionicons name="logo-google" size={32} color={"white"} />}
-              />
-            </View>
-
-            <View className="">
-              <ShareButton
-                title="Login with email"
-                onPress={() => {
-                  router.navigate({
-                    pathname: "/(auth)/login",
-                  });
-                }}
-                textStyle="text-white font-bold"
-                blockStyle="w-[100%] justify-center bg-[#f4511e]"
-              />
-            </View>
-
-            <View className="flex flex-row justify-center">
-              <Text className="text-white">
-                You dont have account?{" "}
-                <Link href={"/(auth)/signup"}>
-                  <Text className="underline underline-offset-1">Register</Text>
-                </Link>
-              </Text>
-            </View>
-          </View>
-        </View>
-      </LinearGradient>
-    </ImageBackground>
-  );
+  return <></>;
 };
 
-export default WelcomePage;
+export default RootPage;

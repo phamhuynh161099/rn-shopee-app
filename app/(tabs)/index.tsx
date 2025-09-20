@@ -7,9 +7,9 @@ import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const data = [
-  { key: 1, name: "test 1", ref: "" },
-  { key: 2, name: "test 2", ref: "" },
-  { key: 3, name: "test 3", ref: "" },
+  { key: 1, name: "test 1", ref: "top-rating", description: "description 1" },
+  { key: 2, name: "test 2", ref: "newcomer", description: "description 2" },
+  { key: 3, name: "test 3", ref: "top-freeship", description: "description 3" },
 ];
 export default function IndexPage() {
   return (
@@ -18,7 +18,9 @@ export default function IndexPage() {
       <CustomFlatList
         data={data}
         style={styles.list}
-        renderItem={({ item }) => <CollectionHome name={item.name} />}
+        renderItem={({ item }) => (
+          <CollectionHome name={item.name} description={item.description} refAPI={item.ref} />
+        )}
         // HeaderComponent={<View style={styles.header} />}
         // StickyElementComponent={<View />}
         // TopListElementComponent={<View style={styles.topList} />}
@@ -40,21 +42,9 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     width: "100%",
   },
-  item: {
-    borderWidth: 1,
-    height: 250,
-    marginBottom: 6,
-    width: "100%",
-  },
   list: {
     overflow: "hidden",
   },
-  // sticky: {
-  //   backgroundColor: "#2555FF50",
-  //   height: 100,
-  //   marginBottom: 6,
-  //   width: "100%",
-  // },
   topList: {
     minHeight: 100,
     marginBottom: 6,
