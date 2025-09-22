@@ -2,23 +2,23 @@ import { processDataRestaurantMenu } from "@/utils/api";
 import { APP_COLOR } from "@/utils/constant";
 import { useRef, useState } from "react";
 import {
-    Dimensions,
-    FlatList,
-    Image,
-    SectionList,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
-    ViewToken
+  Dimensions,
+  FlatList,
+  Image,
+  SectionList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ViewToken
 } from "react-native";
 import Animated, {
-    Extrapolation,
-    interpolate,
-    interpolateColor,
-    useAnimatedScrollHandler,
-    useAnimatedStyle,
-    useSharedValue,
+  Extrapolation,
+  interpolate,
+  interpolateColor,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
 } from "react-native-reanimated";
 import Info from "./info";
 import ItemQuantity from "./item-quantity";
@@ -241,7 +241,7 @@ const RMain = (props: IProps) => {
         renderItem={({ item, index }: { item: any; index: any }) => {
           const menuItem = item;
           return (
-            <ItemQuantity menuItem={menuItem}/>
+            <ItemQuantity menuItem={menuItem} restaurant={restaurant}/>
           );
         }}
         renderSectionHeader={({ section }: { section: any }) => (

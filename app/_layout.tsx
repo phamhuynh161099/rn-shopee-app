@@ -3,7 +3,6 @@ import { Stack } from "expo-router";
 import AppProvider from "../context/app.context";
 import "../global.css";
 
-
 export default function RootLayout() {
   const navTheme = {
     ...DefaultTheme,
@@ -54,6 +53,17 @@ export default function RootLayout() {
             <Stack.Screen
               name="product/[id]"
               options={{ title: "Product Page", headerShown: false }}
+            />
+
+            <Stack.Screen
+              name="product/create.modal"
+              options={{
+                title: "Create Modal Product Page",
+                headerShown: false,
+                animation:"fade",
+                presentation: "formSheet",
+
+              }}
             />
 
             <Stack.Screen

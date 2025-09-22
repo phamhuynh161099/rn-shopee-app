@@ -1,9 +1,9 @@
 import RMain from "@/components/example/restaurant/main";
+import StickyFooter from "@/components/example/restaurant/sticky.footer";
 import { getTopRestaurantByIdAPI } from "@/utils/api";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 // const PHONE_WIDTH = Dimensions.get("window").width - 100;
 const ProductPage = () => {
@@ -27,29 +27,10 @@ const ProductPage = () => {
   }, [id]);
 
   return (
-    <View className="relative">
+    <View className="relative flex-1">
       <RMain restaurant={restaurant} />
 
-      <View className="absolute bottom-0 left-0 right-0 h-[50] bg-sky-300 z-30">
-        <View className="flex flex-row bg-fuchsia-500">
-          <View
-            className="grow bg-sky-800"
-            // style={{
-            //   width: PHONE_WIDTH,
-            // }}
-          >
-            <Text>123</Text>
-            <Ionicons name="card" size={24} color="black" />
-          </View>
-
-
-          <View className="w-[100] bg-orange-300">
-            <Text>Ship</Text>
-          </View>
-
-
-        </View>
-      </View>
+      <StickyFooter restaurant={restaurant}/>
     </View>
   );
 };

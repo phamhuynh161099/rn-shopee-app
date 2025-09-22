@@ -5,6 +5,9 @@ interface AppContextType {
   setTheme: (c: string) => void;
   appState: any;
   setAppState: (c: any) => void;
+
+  cart: any | Record<string, never>;
+  setCart: (c: any) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -24,9 +27,12 @@ export const useCurrentApp = () => {
 const AppProvider = (props: IProps) => {
   const [theme, setTheme] = useState<string>("");
   const [appState, setAppState] = useState();
+  const [cart, setCart] = useState<any | Record<string, never>>({});
 
   return (
-    <AppContext.Provider value={{ theme, setTheme, appState, setAppState }}>
+    <AppContext.Provider
+      value={{ theme, setTheme, appState, setAppState, cart, setCart }}
+    >
       {props.children}
     </AppContext.Provider>
   );
