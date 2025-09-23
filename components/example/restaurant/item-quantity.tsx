@@ -15,43 +15,45 @@ const ItemQuantity = ({
   const { cart, setCart } = useCurrentApp();
 
   const handlePressItem = (item: any, action: "ADD" | "MINUS") => {
-    router.navigate("/product/create.modal");
+    if (item.options.length > 0) {
+      router.navigate("/product/create.modal");
+    } else {
+      if (restaurant?._id) {
+        const total = action === "MINUS" ? -1 : 1;
+        if (!cart[restaurant._id]) {
+          cart[restaurant._id] = {
+            sum: 0,
+            quantity: 0,
+            items: {},
+          };
+        }
 
-    if (restaurant?._id) {
-      const total = action === "MINUS" ? -1 : 1;
-      if (!cart[restaurant._id]) {
-        cart[restaurant._id] = {
-          sum: 0,
-          quantity: 0,
-          items: {},
-        };
-      }
+        //* Xu ly san pham
+        cart[restaurant._id].sum =
+          cart[restaurant._id].sum + total * item.basePrice;
+        cart[restaurant._id].quantity = cart[restaurant._id].quantity + total;
 
-      //* Xu ly san pham
-      cart[restaurant._id].sum =
-        cart[restaurant._id].sum + total * item.basePrice;
-      cart[restaurant._id].quantity = cart[restaurant._id].quantity + total;
+        console.log("::handlePressItem>>", cart[restaurant._id], item);
 
-      console.log("::handlePressItem>>", cart[restaurant._id], item);
+        //* Check san pham da tung them vao chua
+        if (!cart[restaurant._id].items[item._id]) {
+          cart[restaurant._id].items[item._id] = {
+            data: menuItem,
+            quantity: 0,
+          };
+        }
 
-      //* Check san pham da tung them vao chua
-      if (!cart[restaurant._id].items[item._id]) {
         cart[restaurant._id].items[item._id] = {
           data: menuItem,
-          quantity: 0,
+          quantity: cart[restaurant._id].items[item._id].quantity + total,
         };
+
+        if (cart[restaurant._id].items[item._id].quantity <= 0) {
+          delete cart[restaurant._id].items[item._id];
+        }
+
+        setCart((prev: any) => ({ ...prev, cart }));
       }
-
-      cart[restaurant._id].items[item._id] = {
-        data: menuItem,
-        quantity: cart[restaurant._id].items[item._id].quantity + total,
-      };
-
-      if (cart[restaurant._id].items[item._id].quantity <= 0) {
-        delete cart[restaurant._id].items[item._id];
-      }
-
-      setCart((prev: any) => ({ ...prev, cart }));
     }
 
     console.log("cart");

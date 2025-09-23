@@ -61,7 +61,7 @@ export default function RootLayout() {
                 title: "Create Modal Product Page",
                 headerShown: false,
                 animation:"fade",
-                presentation: "formSheet",
+                presentation: "transparentModal",
 
               }}
             />
